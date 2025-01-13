@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_codefactory_practice/constant/color.dart';
+import 'package:flutter_codefactory_practice/screens/component/number_to_image.dart';
 import 'package:flutter_codefactory_practice/screens/setting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<int> numbers = [123, 456, 789];
+  int maxNumber = 1000;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,19 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  onSettingIconPressd() {
-    Navigator.of(context).push(
+  onSettingIconPressd() async {
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
-        return SettingScreen();
+        return SettingScreen(
+          maxNumber: maxNumber.toDouble(),
+        );
       }),
     );
+    maxNumber = result;
   }
 
   generateRandomNumber() {
     final rand = Random();
     final Set<int> newNumber = {};
     while (newNumber.length < 3) {
-      final randomNumber = rand.nextInt(1000);
+      final randomNumber = rand.nextInt(maxNumber);
       newNumber.add(randomNumber);
     }
 
@@ -93,19 +98,8 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: numbers
-          .map((e) => e.toString().split(''))
-          .map((e) => Row(
-                children: e
-                    .map((number) => Image.asset(
-                          'asset/img/${number}.png',
-                          width: 30,
-                        ))
-                    .toList(),
-              ))
-          .toList(),
-    ));
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: numbers.map((e) => NumberToImage(number: e)).toList()));
   }
 }
 

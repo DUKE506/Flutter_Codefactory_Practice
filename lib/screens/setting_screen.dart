@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codefactory_practice/constant/color.dart';
+import 'package:flutter_codefactory_practice/screens/component/number_to_image.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key});
+  final maxNumber;
+  const SettingScreen({super.key, required this.maxNumber});
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  double maxNumber = 1000;
+  late double maxNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    maxNumber = widget.maxNumber;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +32,30 @@ class _SettingScreenState extends State<SettingScreen> {
               _Number(
                 maxNumber: maxNumber,
               ),
-              _Slider(),
-              _Button(),
+              _Slider(
+                maxNumber: maxNumber,
+                onChanged: onSliderChanged,
+              ),
+              _Button(
+                onPressed: onSavePressed,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  onSavePressed() {
+    Navigator.of(context).pop(
+      maxNumber.toInt(),
+    );
+  }
+
+  onSliderChanged(double value) {
+    setState(() {
+      maxNumber = value;
+    });
   }
 }
 
@@ -41,38 +66,36 @@ class _Number extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-          child: Row(
-        children: maxNumber
-            .toInt()
-            .toString()
-            .split('')
-            .map((number) => Image.asset(
-                  'asset/img/${number}.png',
-                  width: 30,
-                ))
-            .toList(),
-      )),
+      child: Container(child: NumberToImage(number: maxNumber.toInt())),
     );
   }
 }
 
 class _Slider extends StatelessWidget {
-  const _Slider({super.key});
+  double maxNumber;
+  ValueChanged<double> onChanged;
+  _Slider({super.key, required this.maxNumber, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Slider(
+      value: maxNumber,
+      min: 1000,
+      max: 100000,
+      activeColor: redColor,
+      onChanged: onChanged,
+    );
   }
 }
 
 class _Button extends StatelessWidget {
-  const _Button({super.key});
+  final VoidCallback onPressed;
+  const _Button({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => {Navigator.of(context).pop()},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
           backgroundColor: redColor, foregroundColor: Colors.white),
       child: Text('저장'),
