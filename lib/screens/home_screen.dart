@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codefactory_practice/layout/default_layout.dart';
-import 'package:flutter_codefactory_practice/screens/route_one_screent.dart';
+import 'package:flutter_codefactory_practice/screens/route_one_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,14 +15,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultLayout(
       children: [
         OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).push(
+          onPressed: () async {
+            final result = await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return RouteOneScreent();
+                  return RouteOneScreen(
+                    number: 20,
+                  );
                 },
               ),
             );
+            print(result);
           },
           child: Text('Push!'),
         ),
