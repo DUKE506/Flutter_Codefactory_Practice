@@ -29,7 +29,19 @@ class _HomeScreenState extends State<HomeScreen> {
             taskCount: 1,
           ),
           Expanded(
-            child: ListView(),
+            child: ListView(
+              children: [
+                Container(
+                  child: Row(
+                    children: [
+                      Text('시간'),
+                      Text('내용'),
+                      Text('색상'),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       )),
