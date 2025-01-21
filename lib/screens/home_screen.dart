@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codefactory_practice/component/calendar.dart';
+import 'package:flutter_codefactory_practice/component/schedule_card.dart';
 import 'package:flutter_codefactory_practice/component/today_banner.dart';
 import 'package:flutter_codefactory_practice/const/const.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -16,6 +17,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (_) {
+                return Container(
+                    // color: Colors.white,
+                    // // height: 600,
+                    // child: Column(
+                    //   children: [],
+                    // ),
+                    );
+              });
+        },
+        backgroundColor: primatyColor,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
           child: Column(
         children: [
@@ -29,18 +50,18 @@ class _HomeScreenState extends State<HomeScreen> {
             taskCount: 1,
           ),
           Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Text('시간'),
-                      Text('내용'),
-                      Text('색상'),
-                    ],
-                  ),
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  ScheduleCard(
+                    startTime: DateTime.now(),
+                    endTime: DateTime.now().add(Duration(hours: 1)),
+                    content: '안녕하세요.',
+                    color: Colors.red,
+                  )
+                ],
+              ),
             ),
           ),
         ],
