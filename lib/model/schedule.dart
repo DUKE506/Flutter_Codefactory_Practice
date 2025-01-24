@@ -1,32 +1,26 @@
-class Schedule {
+import 'package:drift/drift.dart';
+
+class ScheduleTable extends Table {
   /// 식별자
-  final int id;
+  IntColumn get id => integer().autoIncrement()();
 
   /// 시작시간
-  final int startTime;
+  IntColumn get startTime => integer()();
 
   /// 종료시간
-  final int endTime;
+  IntColumn get endTime => integer()();
 
   /// 일정내용
-  final String content;
+  TextColumn get content => text()();
 
   ///날짜
-  final DateTime date;
+  DateTimeColumn get date => dateTime().nullable()();
 
   /// 카테고리
-  final String color;
+  TextColumn get color => text()();
 
   /// 일정 생성 시간
-  final DateTime createdAt;
-
-  Schedule({
-    required this.id,
-    required this.startTime,
-    required this.endTime,
-    required this.content,
-    required this.date,
-    required this.color,
-    required this.createdAt,
-  });
+  DateTimeColumn get createdAt => dateTime().clientDefault(
+        () => DateTime.now().toUtc(),
+      )();
 }

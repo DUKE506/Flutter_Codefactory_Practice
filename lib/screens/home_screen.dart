@@ -14,26 +14,26 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-Map<DateTime, List<Schedule>> schedules = {
+Map<DateTime, List<ScheduleTable>> schedules = {
   DateTime.utc(2025, 1, 22): [
-    Schedule(
-      id: 1,
-      startTime: 11,
-      endTime: 12,
-      content: '플러터 공부',
-      date: DateTime.utc(2025, 1, 22),
-      color: categoryColors.first,
-      createdAt: DateTime.now().toUtc(),
-    ),
-    Schedule(
-      id: 2,
-      startTime: 14,
-      endTime: 15,
-      content: '게임',
-      date: DateTime.utc(2025, 1, 22),
-      color: categoryColors[3],
-      createdAt: DateTime.now().toUtc(),
-    ),
+    // Schedule(
+    //   id: 1,
+    //   startTime: 11,
+    //   endTime: 12,
+    //   content: '플러터 공부',
+    //   date: DateTime.utc(2025, 1, 22),
+    //   color: categoryColors.first,
+    //   createdAt: DateTime.now().toUtc(),
+    // ),
+    // Schedule(
+    //   id: 2,
+    //   startTime: 14,
+    //   endTime: 15,
+    //   content: '게임',
+    //   date: DateTime.utc(2025, 1, 22),
+    //   color: categoryColors[3],
+    //   createdAt: DateTime.now().toUtc(),
+    // ),
   ]
 };
 
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final res = await showModalBottomSheet<Schedule>(
+          final res = await showModalBottomSheet<ScheduleTable>(
               context: context,
               builder: (_) {
                 return ScheduleBottomSheet(
@@ -58,10 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             schedules = {
               ...schedules,
-              res.date: [
-                if (schedules.containsKey(res.date)) ...schedules[res.date]!,
-                res
-              ]
+              // res.date: [
+              //   if (schedules.containsKey(res.date)) ...schedules[res.date]!,
+              //   res
+              // ]
             };
             print(res.content);
           });
@@ -97,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   final scheduleModel = selectedSchedules[index];
 
                   return ScheduleCard(
-                    startTime: scheduleModel.startTime,
-                    endTime: scheduleModel.endTime,
-                    content: scheduleModel.content,
+                    startTime: 12,
+                    endTime: 13,
+                    content: 'test',
                     color: Color(
                       int.parse('FF${scheduleModel.color}', radix: 16),
                     ),
